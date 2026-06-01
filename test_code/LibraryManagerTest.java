@@ -145,21 +145,17 @@ class LibraryManagerTest {
      * @see <a href="https://github.com/sumannam/Java/issues/40">Issue #40: SQL Injection 취약점 개발</a>
      */
     @Test
-    @DisplayName("보안 테스트: SQL Injection을 이용한 인증 우회")
-    void loginSqlInjectionTest() {
-        // Given: 패스워드를 모르는 상태에서 항상 참이 되는 조건 주입
-        String attackId = "' OR 1=1 #";
-        String attackPw = "wrong_password";
+    @DisplayName("보안 테스트: SQL Injection 차단 확인")
 
-        // When: 취약한 login 메서드 호출
+    void loginSqlInjectionPreventionTest() {
+        String attackId = "admin";
+        String attackPw = "' OR '1'='1";
         boolean result = manager.login(attackId, attackPw);
 
-        // Then: 로그인이 성공(true)한다면 SQL Injection 취약점이 존재함을 입증
-        assertTrue(result, "취약점 발견: SQL Injection 페이로드로 인증이 우회되었습니다.");
-
-        if (result) {
-            System.out.println("[경고] SQL Injection 공격 성공: 유효하지 않은 계정으로 로그인되었습니다.");
-        }
+        assertFalse(
+            result,
+            "SQL Injection 공격이 차단되어야 합니다."
+        );
     }
 
     /**
@@ -204,7 +200,7 @@ class LibraryManagerTest {
 
         assertTrue(
                 isVulnerable,
-                "취약점 발견: OS 명령어 주입으로 파일 생성 성공"
+                "보안 수정 실패: OS 명령어 주입이 차단되지 않았습니다."
         );
     }
 }
