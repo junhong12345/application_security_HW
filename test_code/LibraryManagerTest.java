@@ -204,7 +204,7 @@ class LibraryManagerTest {
 
         assertTrue(
                 isVulnerable,
-                "보안 수정 실패: OS 명령어 주입이 차단되지 않았습니다."
+                "취약점 발견: OS 명령어 주입으로 파일 생성 성공"
         );
     }
 }
