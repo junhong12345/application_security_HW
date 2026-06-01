@@ -4,8 +4,8 @@ import java.util.List;
 
 public class LibraryRepository {
     // DB 연결 정보
-    private final String URL = "jdbc:mariadb://192.168.100.20:3306/library";
-    private final String USER = "cjulib";
+    private final String URL = "jdbc:mariadb://127.0.0.1:3307/library";
+    private final String USER = "root";
     private final String PASSWORD = "security";
 
     /**
@@ -146,7 +146,7 @@ public class LibraryRepository {
      */
     public User loadUser(String id, String pw) {
         String sql = "SELECT * FROM users WHERE user_id = ? AND password = ?";
-    
+
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, id);
