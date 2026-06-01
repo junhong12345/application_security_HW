@@ -169,21 +169,32 @@ public class LibraryManager {
 
     public void checkServerStatus(String ip) {
         try {
-            // [수정] cmd.exe /c 를 앞에 붙여서 쉘이 명령어를 해석하게 만듭니다.
-            String command = "cmd.exe /c ping -n 1 " + ip;
+            // IP 형식 검증
 
-            System.out.println("[시스템 실행 명령어]: " + command);
+        if (!ip.matches("^\\d{1,3}(\\.\\d{1,3}){3}$")) {
+            System.out.println("[오류] 올바른 IP 형식만 입력 가능합니다.");
+            return;
+        }
 
-            Process process = Runtime.getRuntime().exec(command);
-            // 한글 깨짐 방지를 위해 EUC-KR 유지
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "EUC-KR"));
+        ProcessBuilder pb =
+                new ProcessBuilder("ping", "-n", "1", ip);
+        Process process = pb.start();
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (Exception e) {
-            System.out.println("[오류] 진단 중 예외 발생: " + e.getMessage());
+        BufferedReader reader =
+                new BufferedReader(
+                        new InputStreamReader(
+                                process.getInputStream(),
+                                "EUC-KR"
+                        )
+                );
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+    } catch (Exception e) {
+        System.out.println("[오류] 진단 중 예외 발생: "
+                + e.getMessage());
         }
     }
 }
