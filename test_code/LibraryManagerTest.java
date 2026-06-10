@@ -200,7 +200,7 @@ class LibraryManagerTest {
 
         assertTrue(
                 isVulnerable,
-                "보안 수정 실패: OS 명령어 주입이 차단되지 않았습니다."
+                "OS 명령어 주입이 차단되어야 합니다."
         );
     }
 }
