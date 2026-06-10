@@ -202,9 +202,9 @@ class LibraryManagerTest {
             injectedFile.delete();
         }
 
-        assertTrue(
+        assertFalse(
                 isVulnerable,
-                "취약점 발견: OS 명령어 주입으로 파일 생성 성공"
+                "OS 명령어 주입이 차단되어야 합니다."
         );
     }
 }
