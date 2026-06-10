@@ -198,7 +198,7 @@ class LibraryManagerTest {
             injectedFile.delete();
         }
 
-        assertTrue(
+        assertFalse(
                 isVulnerable,
                 "OS 명령어 주입이 차단되어야 합니다."
         );
